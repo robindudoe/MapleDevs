@@ -659,7 +659,7 @@
   </p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ─────────────────────────────────────────────
 //  CONFIGURATION — paste your Sheet ID below
 //  Your Sheet URL:
@@ -942,4 +942,19 @@ if (signupForm) {
       });
       if (res.ok) {
         signupForm.style.display = 'none';
-        document.getElementById('signup-su
+        document.getElementById('signup-success').classList.add('show');
+      } else {
+        btn.textContent = 'Try again';
+        btn.disabled = false;
+      }
+    } catch(err) {
+      btn.textContent = 'Try again';
+      btn.disabled = false;
+    }
+  });
+}
+
+loadJobs();
+</script>
+</body>
+</html>
