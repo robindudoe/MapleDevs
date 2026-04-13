@@ -915,7 +915,7 @@ function cardHTML(j, realIdx, animIdx) {
       ${j.type ? `<span class="pill pill-type">${esc(j.type)}</span>` : ''}
       ${j.mode ? `<span class="pill ${modeClass(j.mode)}">${esc(j.mode)}</span>` : ''}
       ${j.student ? '<span class="pill pill-student">Student-friendly</span>' : ''}
-      ${j.salary ? `<span class="pill pill-salary">\${esc(j.salary)}</span>` : ''}
+      ${j.salary ? '<span class="pill pill-salary">' + esc(j.salary) + '</span>' : ''}
     </div>
     ${j.desc ? `<div class="card-desc">${esc(j.desc)}</div>` : ''}
     <div class="card-footer">
@@ -954,7 +954,7 @@ function openDetail(idx) {
         ${j.type ? `<span class="pill pill-type">${esc(j.type)}</span>` : ''}
         ${j.mode ? `<span class="pill ${modeClass(j.mode)}">${esc(j.mode)}</span>` : ''}
         ${j.student ? '<span class="pill pill-student">Student-friendly</span>' : ''}
-        ${j.salary ? `<span class="pill pill-salary">\${esc(j.salary)}</span>` : ''}
+      ${j.salary ? '<span class="pill pill-salary">' + esc(j.salary) + '</span>' : ''}
       </div>
     </div>
     ${j.desc ? `
@@ -987,7 +987,7 @@ function renderDetailContent(idx) {
         ${j.type ? `<span class="pill pill-type">${esc(j.type)}</span>` : ''}
         ${j.mode ? `<span class="pill ${modeClass(j.mode)}">${esc(j.mode)}</span>` : ''}
         ${j.student ? '<span class="pill pill-student">Student-friendly</span>' : ''}
-        ${j.salary ? `<span class="pill pill-salary">\${esc(j.salary)}</span>` : ''}
+      ${j.salary ? '<span class="pill pill-salary">' + esc(j.salary) + '</span>' : ''}
       </div>
     </div>
     ${j.desc ? `
