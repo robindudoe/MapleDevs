@@ -215,6 +215,8 @@ header::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0
 .s-wrap input:focus ~ .s-key { opacity: 0; }
 select { padding: 9px 12px; font-family: inherit; font-size: 12px; font-weight: 500; border: 1px solid var(--border-s); border-radius: var(--r-s); background: var(--bg-input); color: var(--text-1); cursor: pointer; outline: none; transition: all var(--dur); min-height: 38px; }
 select:focus { border-color: var(--maple); box-shadow: 0 0 0 3px var(--maple-glow); }
+.alert-btn { background: var(--bg-1); color: var(--maple); border: 1px solid rgba(200,55,45,0.3); border-radius: 100px; padding: 6px 12px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.alert-btn:hover { background: var(--maple-glow); border-color: var(--maple); }
 .stu-label { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--text-2); cursor: pointer; white-space: nowrap; min-height: 38px; padding: 0 7px; border-radius: var(--r-s); transition: background var(--dur); }
 .stu-label:hover { background: var(--bg-subtle); }
 .stu-label input { accent-color: var(--maple); width: 15px; height: 15px; cursor: pointer; }
@@ -623,9 +625,30 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 1.5rem; backgroun
       <select id="f-type" onchange="render()" aria-label="Type"><option value="">All types</option><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option></select>
       <select id="f-mode" onchange="render()" aria-label="Mode"><option value="">All modes</option><option>Remote</option><option>Hybrid</option><option>On-site</option></select>
       <label class="stu-label" title="No experience required / accepts students"><input type="checkbox" id="f-student" onchange="render()"> Student-friendly</label>
+      <button class="alert-btn" onclick="openAlertModal()" title="Get email alerts for this search">🔔 Alert me</button>
       <span class="r-count" id="r-count" aria-live="polite"></span>
     </div>
     <div class="f-pills" id="f-pills"></div>
+  </div>
+
+  <!-- ═══════ ALERT MODAL ═══════ -->
+  <div class="modal-bg" id="alert-modal" onclick="if(event.target===this)closeAlertModal()">
+    <div class="modal" role="dialog" style="max-width:400px;">
+      <div class="modal-hdr">
+        <h2 id="alert-modal-title">Get Job Alerts</h2>
+        <button class="modal-close" onclick="closeAlertModal()" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom:1rem; color:var(--text-2); font-size:14px;">We will notify you when new jobs matching your search criteria are posted.</p>
+        <div class="fg">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" id="alert-email" required placeholder="you@email.com">
+        </div>
+        <div class="form-submit" style="margin-top:1.5rem;">
+          <button type="button" class="btn-p" style="width:100%; text-align:center;" onclick="handleAlertSignup()">Subscribe to Alerts →</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <main id="main-content" role="main">
@@ -676,6 +699,9 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 1.5rem; backgroun
   <p class="subtext">All studios currently hiring on MapleDevs</p>
   <div class="st-grid" id="st-grid"></div>
 </div></div>
+
+<!-- ═══════ STUDIO PROFILE VIEW ═══════ -->
+<div id="studio-prof-view" class="view" role="main"><div class="studios-c" id="sp-content"></div></div>
 
 <!-- ═══════ SAVED VIEW ═══════ -->
 <div id="saved-view" class="view" role="main"><div class="saved-c">
@@ -814,8 +840,22 @@ function filterCity(c){showBoard();document.getElementById('f-city').value=c;ren
 /* ═══════ STUDIOS ═══════ */
 function showStudios(){history.pushState({v:'studios'},"","#studios");hideAll();document.getElementById("studios-view").classList.add("on");clearNav();document.getElementById("nav-studios").classList.add("active");renderStudios();window.scrollTo(0,0);}
 function renderStudios(){const m={};ALL.forEach(j=>{if(!m[j.studio])m[j.studio]={n:j.studio,c:j.location,ct:0};m[j.studio].ct++;});const ss=Object.values(m).sort((a,b)=>b.ct-a.ct),g=document.getElementById("st-grid");if(!ss.length){g.innerHTML='<div class="state-msg"><span class="ic">🏢</span>No studios yet.</div>';return;}
-g.innerHTML=ss.map(s=>'<div class="st-card" onclick="filterStudio(\''+esc(s.n).replace(/'/g,"\\'")+'\')"><div class="st-name">'+esc(s.n)+'</div><div class="st-city">'+esc(s.c||'Canada')+'</div><span class="st-count">'+s.ct+' role'+(s.ct!==1?'s':'')+'</span></div>').join('');}
-function filterStudio(n){showBoard();document.getElementById('search').value=n;render();setTimeout(()=>document.getElementById('main-content').scrollIntoView({behavior:'smooth'}),100);}
+g.innerHTML=ss.map(s=>'<div class="st-card" onclick="openStudioProfile(\''+esc(s.n).replace(/'/g,"\\'")+'\')"><div class="st-name">'+esc(s.n)+'</div><div class="st-city">'+esc(s.c||'Canada')+'</div><span class="st-count">'+s.ct+' role'+(s.ct!==1?'s':'')+'</span></div>').join('');}
+function openStudioProfile(n){
+  history.pushState({v:'studio', n:n}, "", "#studio-"+n.replace(/\s+/g,'-').toLowerCase());
+  hideAll(); document.getElementById("studio-prof-view").classList.add("on"); clearNav(); document.getElementById("nav-studios").classList.add("active");
+  const c = document.getElementById("sp-content");
+  const jobs = ALL.filter(j=>j.studio===n).sort((a,b)=>(b.featured?1:0)-(a.featured?1:0));
+  if(!jobs.length){ c.innerHTML='<div class="state-msg">No roles found.</div>'; return; }
+  const text = jobs.map(j => (j.desc+" "+j.title)).join(" ").toLowerCase();
+  const kw = []; const rules = {'C++':/c\+\+/, 'C#':/c#/, 'Unity':/unity/, 'Unreal':/unreal/, 'Maya':/maya/, 'Blender':/blender/, 'Python':/python/, 'ZBrush':/zbrush/, 'Houdini':/houdini/, 'Perforce':/perforce/, 'Mobile':/mobile|ios|android/, 'Console':/console|xbox|ps5|playstation/};
+  for(const [k,r] of Object.entries(rules)){ if(r.test(text)) kw.push(k); }
+  c.innerHTML = '<button class="back-b" onclick="showStudios()">← Back to studios</button>'
+    +'<div class="d-hdr" style="margin-top:1.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border-color);"><div class="d-title">'+esc(n)+'</div><div class="d-studio">'+jobs.length+' open role'+(jobs.length>1?'s':'')+' · '+esc(jobs[0].location||'Canada')+'</div>'
+    +(kw.length?'<div class="d-pills" style="margin-top:1rem;">'+kw.map(k=>'<span class="pill" style="background:var(--bg-2); color:var(--text-1); border:1px solid var(--border-color);">'+k+'</span>').join('')+'</div>':'')
+    +'</div><div class="job-list" style="margin-top:1.5rem;">'+jobs.map((j,i)=>cardHTML(j, ALL.indexOf(j), i)).join("")+'</div>';
+  window.scrollTo(0,0);
+}
 
 /* ═══════ SAVED VIEW ═══════ */
 function showSaved(){history.pushState({v:'saved'},"","#saved");hideAll();document.getElementById("saved-view").classList.add("on");clearNav();document.getElementById("nav-saved").classList.add("active");renderSaved();window.scrollTo(0,0);}
@@ -828,7 +868,7 @@ function closeAllViews(){showBoard();}
 function showBoard(){history.pushState(null,"",location.pathname);document.getElementById("board-view").classList.remove("off");document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));clearNav();window.scrollTo(0,0);}
 function showAbout(){history.pushState({v:'about'},"","#about");hideAll();document.getElementById("about-view").classList.add("on");clearNav();document.getElementById("nav-about").classList.add("active");window.scrollTo(0,0);}
 
-window.addEventListener("popstate",function(e){if(e.state&&e.state.idx!==undefined)openDet(e.state.idx);else if(e.state&&e.state.v==='about')showAbout();else if(e.state&&e.state.v==='studios')showStudios();else if(e.state&&e.state.v==='saved')showSaved();else showBoard();});
+window.addEventListener("popstate",function(e){if(e.state&&e.state.idx!==undefined)openDet(e.state.idx);else if(e.state&&e.state.v==='about')showAbout();else if(e.state&&e.state.v==='studios')showStudios();else if(e.state&&e.state.v==='saved')showSaved();else if(e.state&&e.state.v==='studio')openStudioProfile(e.state.n);else showBoard();});
 
 /* ═══════ POST A JOB MODAL ═══════ */
 function openPostModal(){document.getElementById('post-modal').classList.add('on');document.body.style.overflow='hidden';}
@@ -862,17 +902,20 @@ function submitPostForm(e){
   return false;
 }
 
-/* ═══════ SIGNUP ═══════ */
+/* ═══════ SIGNUP & ALERTS ═══════ */
 function handleSignup(){const e=document.getElementById('signup-email').value;if(!e||!e.includes('@')){document.getElementById('signup-email').focus();return;}window.open('http://eepurl.com/jDQFL2','_blank');document.getElementById('signup-form').style.display='none';document.getElementById('signup-ok').classList.add('show');toast('Welcome! 🍁','📧');}
+function openAlertModal(){document.getElementById('alert-modal').classList.add('on');document.body.style.overflow='hidden';}
+function closeAlertModal(){document.getElementById('alert-modal').classList.remove('on');document.body.style.overflow='';}
+function handleAlertSignup(){const e=document.getElementById('alert-email').value;if(!e||!e.includes('@')){document.getElementById('alert-email').focus();return;}window.open('http://eepurl.com/jDQFL2','_blank');closeAlertModal();toast('Alerts enabled! 🍁','🔔');}
 
 /* ═══════ KEYBOARD SHORTCUTS ═══════ */
-document.addEventListener('keydown',function(e){if(e.key==='/'&&!e.ctrlKey&&!e.metaKey){const a=document.activeElement;if(a.tagName==='INPUT'||a.tagName==='TEXTAREA'||a.tagName==='SELECT')return;e.preventDefault();document.getElementById('search').focus();}if(e.key==='Escape'){const s=document.getElementById('search');if(document.activeElement===s&&s.value){s.value='';s.blur();render();}if(document.getElementById('post-modal').classList.contains('on'))closePostModal();}});
+document.addEventListener('keydown',function(e){if(e.key==='/'&&!e.ctrlKey&&!e.metaKey){const a=document.activeElement;if(a.tagName==='INPUT'||a.tagName==='TEXTAREA'||a.tagName==='SELECT')return;e.preventDefault();document.getElementById('search').focus();}if(e.key==='Escape'){const s=document.getElementById('search');if(document.activeElement===s&&s.value){s.value='';s.blur();render();}if(document.getElementById('post-modal').classList.contains('on'))closePostModal();if(document.getElementById('alert-modal').classList.contains('on'))closeAlertModal();}});
 
 /* ═══════ BROWSE BUTTON ═══════ */
 document.getElementById('browse-btn').addEventListener('click',function(e){e.preventDefault();document.getElementById('search').focus();document.getElementById('main-content').scrollIntoView({behavior:'smooth'});});
 
 /* ═══════ INIT ═══════ */
-function handleHash(){const h=location.hash;if(h==='#about')showAbout();else if(h==='#studios')showStudios();else if(h==='#saved')showSaved();else if(h.startsWith('#job-')){const i=parseInt(h.replace('#job-',''),10);if(!isNaN(i)&&ALL[i])openDet(i);}}
+function handleHash(){const h=location.hash;if(h==='#about')showAbout();else if(h==='#studios')showStudios();else if(h==='#saved')showSaved();else if(h.startsWith('#job-')){const i=parseInt(h.replace('#job-',''),10);if(!isNaN(i)&&ALL[i])openDet(i);}else if(h.startsWith('#studio-')){const sn=h.replace('#studio-','').replace(/-/g,' ').toLowerCase();const s=ALL.find(j=>j.studio.toLowerCase()==sn);if(s)openStudioProfile(s.studio);}}
 loadJobs().then(handleHash);
 </script>
 </body>
