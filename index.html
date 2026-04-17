@@ -412,38 +412,87 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 1.5rem; backgroun
 @keyframes toastOut { to { opacity: 0; transform: translateY(6px) scale(0.95); } }
 
 /* ═══════ RESPONSIVE ═══════ */
+/* ═══════ RESPONSIVE ═══════ */
 @media (max-width: 768px) {
+  /* Global */
+  body { overflow-x: hidden; }
+  :root { --header-h: 60px; }
+
+  /* Header */
+  header { padding: 0 1rem; }
+  .logo-w { font-size: 19px; }
+  .h-nav { 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch; 
+    gap: 0; 
+    margin-right: -1rem; 
+    padding-right: 1rem;
+    scrollbar-width: none;
+  }
+  .h-nav::-webkit-scrollbar { display: none; }
+  .n-link { padding: 6px 10px; font-size: 12px; }
+  .post-job-nav { display: none; } /* Hide in small nav to save space */
+  
+  /* Hero */
   .hero { padding: 3rem 1rem 2.5rem; }
-  .hero h1 { font-size: 1.9rem; }
-  .hero p { font-size: 15px; }
-  .hero-stats { gap: 1.5rem; }
-  .signup-in { flex-direction: column; gap: 0.75rem; }
-  .signup-f { max-width: 100%; width: 100%; }
-  .controls { padding: 0.6rem 1rem; }
-  select { font-size: 11px; padding: 8px 8px; }
-  main { padding: 0.75rem 1rem 3rem; }
-  .d-card { padding: 1.25rem; }
-  .about-c, .studios-c, .saved-c { padding: 1.75rem 1rem 3rem; }
-  .ft-inner { flex-direction: column; align-items: flex-start; }
-  .hero-cta { flex-direction: column; }
+  .hero h1 { font-size: 1.9rem; line-height: 1.2; }
+  .hero p { font-size: 14px; margin-bottom: 1.5rem; }
+  .hero-cta { flex-direction: column; gap: 8px; }
   .btn-p, .btn-s { width: 100%; justify-content: center; }
-  .post-job-nav { display: none; }
-  .trusted { display: none; }
+  .hero-stats { gap: 1.25rem; justify-content: space-between; padding-top: 1.25rem; }
+  .stat-n { font-size: 24px; }
+  .stat-l { font-size: 10px; }
+
+  /* Signup */
+  .signup-in { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .signup-f { width: 100%; max-width: 100%; }
+
+  /* Controls/Filters */
+  .controls { position: relative; top: 0; padding: 1rem; }
+  .ctrl-inner { flex-direction: column; align-items: stretch; gap: 10px; }
+  .s-wrap { min-width: 100%; }
   .s-key { display: none; }
+  .filters-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  select { width: 100%; font-size: 13px; }
+  .r-count { margin-left: 0; margin-top: 4px; font-size: 11px; }
+
+  /* Main / Job Cards */
+  main { padding: 1rem 1rem 3rem; }
+  .jc { padding: 1rem; }
+  .jc-title { font-size: 14px; }
+  .jc-pills { gap: 2px; }
+  .pill { font-size: 10px; padding: 2px 7px; }
+  .jc-foot { flex-direction: column; align-items: flex-start; gap: 6px; }
+
+  /* About / Studios / Saved */
+  .about-c, .studios-c, .saved-c { padding: 2rem 1rem 3rem; }
+  .about-c h1 { font-size: 1.7rem; }
   .st-grid { grid-template-columns: 1fr; }
-  .toast-c { left: 12px; right: 12px; }
-  .toast { max-width: 100%; }
-  .modal { max-height: 95vh; margin: 0; border-radius: var(--r-l); }
+
+  /* Modal */
+  .modal { max-height: 94vh; margin: 0; border-radius: var(--r-l); }
+  .form-grid { grid-template-columns: 1fr; gap: 10px; }
   .modal-hdr { padding: 1.25rem 1.25rem 0; }
   .modal-body { padding: 1rem 1.25rem 1.5rem; }
-  .form-grid { grid-template-columns: 1fr; }
-  .cta-section { padding: 2rem 1rem; }
+
+  /* Discovery Footer */
+  .ft-discovery { padding: 2rem 1rem; }
+  .ft-disc-in { grid-template-columns: 1fr; gap: 1.5rem; }
+  
+  /* Footer Bottom */
+  .ft-inner { flex-direction: column; align-items: center; text-align: center; gap: 1rem; }
+  .ft-links { justify-content: center; gap: 12px; }
+  .ft-copy { text-align: center; }
+
+  /* Trusted */
+  .trusted { display: none; }
 }
+
 @media (max-width: 480px) {
-  .h-nav { gap: 0; }
-  .n-link { padding: 6px 7px; font-size: 12px; }
-  .theme-btn { width: 30px; height: 30px; }
-  .stat-n { font-size: 26px; }
+  .hero h1 { font-size: 1.6rem; }
+  .filters-group { grid-template-columns: 1fr; }
+  .toast-c { left: 10px; right: 10px; bottom: 15px; }
+  .toast { font-size: 12px; }
 }
   .ft-discovery { border-top: 1px solid var(--border); padding: 3rem 1.5rem; background: var(--bg-body); }
   .ft-disc-in { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
