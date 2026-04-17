@@ -79,6 +79,14 @@ function injectSEO(html, target) {
 
 console.log('Generating SEO Landing Pages...');
 
+let sitemapXML = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://mapledevs.ca/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>`;
+
 for (const target of SEO_TARGETS) {
     const targetDir = path.join(ROOT_DIR, target.folder);
     if (!fs.existsSync(targetDir)) {
@@ -87,7 +95,20 @@ for (const target of SEO_TARGETS) {
 
     const modifiedHTML = injectSEO(baseHTML, target);
     fs.writeFileSync(path.join(targetDir, 'index.html'), modifiedHTML);
+    
+    // Add to sitemap
+    sitemapXML += `
+  <url>
+    <loc>https://mapledevs.ca/${target.folder}/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>`;
+
     console.log(`✅ Generated /${target.folder}/index.html`);
 }
+
+sitemapXML += `\n</urlset>`;
+fs.writeFileSync(path.join(ROOT_DIR, 'sitemap.xml'), sitemapXML);
+console.log('✅ Generated sitemap.xml');
 
 console.log('Done! Push to GitHub to deploy these new SEO endpoints.');
