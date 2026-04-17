@@ -1,0 +1,34 @@
+# MapleDevs — SEO Build Workflow
+# Runs manually or triggered via Dashboard to build SEO landing pages.
+
+name: Build SEO Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 🍁 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📥 Generate SEO Payloads
+        run: node scripts/build-seo.js
+
+      - name: 💾 Commit and Push Changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add */index.html || true
+          git commit -m "🤖 Auto-generated SEO updates" || echo "No changes to commit"
+          git push
