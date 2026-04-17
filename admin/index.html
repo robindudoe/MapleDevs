@@ -146,9 +146,9 @@ main { flex: 1; padding: 2rem; display: grid; grid-template-columns: 2fr 1fr; ga
       <div class="metrics-grid">
         <div class="metric-card">
           <div class="mc-glow"></div>
-          <div class="mc-label">Weekly Traffic</div>
-          <div class="mc-val">12,492</div>
-          <div class="mc-trend">↑ 14% vs last week</div>
+          <div class="mc-label">Hiring Studios</div>
+          <div class="mc-val" id="met-studios">--</div>
+          <div class="mc-trend">Verified Employers</div>
         </div>
         <div class="metric-card">
           <div class="mc-glow"></div>
@@ -158,14 +158,14 @@ main { flex: 1; padding: 2rem; display: grid; grid-template-columns: 2fr 1fr; ga
         </div>
         <div class="metric-card">
           <div class="mc-glow"></div>
-          <div class="mc-label">Discord Sentinels</div>
-          <div class="mc-val">Cloud</div>
-          <div class="mc-trend" style="color:var(--status-good)">100% Uptime</div>
+          <div class="mc-label">Cities Covered</div>
+          <div class="mc-val" id="met-cities">--</div>
+          <div class="mc-trend" style="color:var(--status-good)">Across Canada</div>
         </div>
       </div>
 
-      <div class="p-hdr" style="margin-bottom:0.5rem"><i>📈</i> Traffic Velocity (30 Days)</div>
-      <p style="font-size:0.85rem; color:var(--text-2)">Predicted model from aggregated endpoints</p>
+      <div class="p-hdr" style="margin-bottom:0.5rem"><i>📈</i> Job Distribution (By Top Cities)</div>
+      <p style="font-size:0.85rem; color:var(--text-2)">Real-time composition derived from open roles</p>
       <div class="graph-c"><div class="g-bar-c" id="g-bars"></div></div>
     </div>
 
@@ -250,16 +250,7 @@ setInterval(()=>{
     document.getElementById('clock').textContent = new Date().toISOString().replace('T',' ').substring(0,19) + " SYS";
 }, 1000);
 
-// Graph Gen
-const gb = document.getElementById('g-bars');
-for(let i=0; i<30; i++) {
-    const d = document.createElement('div'); d.className='g-bar';
-    const val = Math.floor(Math.random() * 60) + 20;
-    d.style.height = '0%';
-    setTimeout(()=>d.style.height = val+'%', 100);
-    d.dataset.val = (val*10) + ' visits';
-    gb.appendChild(d);
-}
+// Remove old mock graph generator; now handled dynamically in load() based on sheet data.
 
 // ═══════ BI ASSISTANT LOGIC ═══════
 const SHEET_ID = '2PACX-1vSkt2ROoihRVsL4f0m4dXZ1IzD7KYzEghgOwW7QPC2EN6sE4D_iI3stfllfdeq61coOrhdi47eeLmoY';
@@ -277,8 +268,33 @@ async function load() {
                 title: cl(c[0]), studio: cl(c[1]), location: cl(c[2]||""), type: cl(c[3]||""), mode: cl(c[4]||""), desc: cl(c[5]||""), student: cl(c[9]||"").toLowerCase()==="yes"
             });
         }
+        
+        // Compute Real Metrics
         document.getElementById('met-jobs').textContent = JOBS.length;
-        pushMsg('ai', `Connection established. Synchronized ${JOBS.length} active roles from the master database. Ready for queries.`);
+        const studios = new Set(JOBS.map(j => j.studio));
+        document.getElementById('met-studios').textContent = studios.size;
+        const cities = new Set(JOBS.map(j => j.location).filter(Boolean));
+        document.getElementById('met-cities').textContent = cities.size;
+
+        // Compute Real Graph (City Distribution)
+        const cityCounts = {};
+        JOBS.forEach(j => { if(j.location) cityCounts[j.location] = (cityCounts[j.location] || 0) + 1; });
+        const topCities = Object.entries(cityCounts).sort((a,b)=>b[1]-a[1]).slice(0, 20); // Top 20 bars
+        const maxCityVal = topCities[0]?.[1] || 1;
+        
+        const gb = document.getElementById('g-bars');
+        gb.innerHTML = '';
+        topCities.forEach((cityPair, idx) => {
+            const d = document.createElement('div'); 
+            d.className='g-bar';
+            const pct = Math.max((cityPair[1] / maxCityVal) * 100, 5); // 5% minimum height
+            d.style.height = '0%';
+            setTimeout(()=>d.style.height = pct+'%', 100 + (idx * 50));
+            d.dataset.val = cityPair[0] + ': ' + cityPair[1] + ' roles';
+            gb.appendChild(d);
+        });
+
+        pushMsg('ai', `Connection established. Synchronized **${JOBS.length} active roles** from **${studios.size} studios** across **${cities.size} cities**! Ready for queries.`);
     } catch(e) { 
         pushMsg('ai', `Error connecting to database partition: ${e.toString()}`); 
     }
