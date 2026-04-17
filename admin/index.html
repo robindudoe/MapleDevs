@@ -125,9 +125,19 @@ main { flex: 1; padding: 2rem; display: grid; grid-template-columns: 2fr 1fr; ga
 <header>
   <div class="logo">Maple<span>Devs</span> <i>// Command Center</i></div>
   <div class="header-right">
+    <button onclick="toggleGithubSettings()" style="background:transparent; border:1px solid var(--panel-border); color:var(--text-2); padding:6px 12px; border-radius:6px; cursor:pointer; font-family:var(--font); transition:0.2s;">⚙️ API Config</button>
     <div id="clock" class="time-display">00:00:00 SYS</div>
   </div>
 </header>
+
+<!-- GITHUB CONFIG OVERLAY -->
+<div id="gh-config" style="display:none; position:fixed; right:2rem; top:4.5rem; background:var(--panel-bg); backdrop-filter:var(--blur); border:1px solid var(--panel-border); padding:1rem; border-radius:12px; z-index:100; font-size:0.9rem; width:300px; box-shadow:0 8px 32px rgba(0,0,0,0.5);">
+  <div style="font-weight:600; margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">GitHub API Connection <span style="cursor:pointer; color:var(--text-2);" onclick="toggleGithubSettings()">×</span></div>
+  <input type="text" id="gh-user" placeholder="GitHub Username" style="width:100%; padding:8px; margin-bottom:8px; background:rgba(0,0,0,0.5); border:1px solid var(--panel-border); color:white; border-radius:4px;">
+  <input type="password" id="gh-token" placeholder="Personal Access Token" style="width:100%; padding:8px; margin-bottom:12px; background:rgba(0,0,0,0.5); border:1px solid var(--panel-border); color:white; border-radius:4px;">
+  <button onclick="saveGithubConfig()" style="width:100%; padding:8px; background:var(--maple); color:white; border:none; border-radius:4px; font-weight:600; cursor:pointer;">Save Token</button>
+  <div id="gh-msg" style="margin-top:8px; color:var(--status-good); font-size:0.8rem;"></div>
+</div>
 
 <main>
   <div class="left-col">
@@ -166,19 +176,27 @@ main { flex: 1; padding: 2rem; display: grid; grid-template-columns: 2fr 1fr; ga
         <div class="agent-card">
           <div class="ag-hdr"><div class="ag-name">👁️ The Hunter</div><div class="ag-status"></div></div>
           <div class="ag-role">Automated Job Scraper</div>
-          <div class="ag-act">IDLE - Last run 4h ago</div>
+          <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:0.5rem;">
+            <div class="ag-act">IDLE</div>
+            <button onclick="triggerWorkflow('scrape-jobs.yml', this)" style="background:var(--maple); color:white; border:none; padding:4px 10px; border-radius:4px; font-size:0.75rem; font-weight:600; cursor:pointer;" title="Force scrape jobs instantly via API">ENGAGE</button>
+          </div>
         </div>
 
         <div class="agent-card">
           <div class="ag-hdr"><div class="ag-name">🛡️ The Warden</div><div class="ag-status working"></div></div>
           <div class="ag-role">Discord Auto-Moderator</div>
-          <div class="ag-act">LISTENING on Port 3000</div>
+          <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:0.5rem;">
+            <div class="ag-act">LISTENING on Port 3000</div>
+          </div>
         </div>
 
         <div class="agent-card">
           <div class="ag-hdr"><div class="ag-name">🏗️ The Architect</div><div class="ag-status"></div></div>
           <div class="ag-role">SEO Payload Generator</div>
-          <div class="ag-act">READY - Awaiting Command</div>
+          <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:0.5rem;">
+            <div class="ag-act">READY</div>
+            <button onclick="triggerWorkflow('build-seo.yml', this)" style="background:var(--maple); color:white; border:none; padding:4px 10px; border-radius:4px; font-size:0.75rem; font-weight:600; cursor:pointer;" title="Re-build SEO HTML pages via API">ENGAGE</button>
+          </div>
         </div>
 
       </div>
@@ -310,10 +328,108 @@ function sendMsg() {
                 const top = Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,3);
                 res = `The top hiring studios right now are:<br>1. **${top[0][0]}** (${top[0][1]} roles)<br>2. **${top[1][0]}** (${top[1][1]} roles)<br>3. **${top[2][0]}** (${top[2][1]} roles)`;
             }
+        } else if (q.includes('change') || q.includes('add ') || q.includes('fix ') || q.includes('build')) {
+            createGitHubIssue(q);
+            return; // Handled asynchronously
         }
 
         pushMsg('ai', res);
     }, 600);
+}
+
+// ═══════ GITHUB API BRIDGE ═══════
+function getGhAuth() { 
+  return { u: localStorage.getItem('md_gh_username'), t: localStorage.getItem('md_gh_token') }; 
+}
+
+function toggleGithubSettings() {
+    const el = document.getElementById('gh-config');
+    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    const a = getGhAuth();
+    if(a.u) document.getElementById('gh-user').value = a.u;
+    if(a.t) document.getElementById('gh-token').value = a.t;
+}
+
+function saveGithubConfig() {
+    localStorage.setItem('md_gh_username', document.getElementById('gh-user').value);
+    localStorage.setItem('md_gh_token', document.getElementById('gh-token').value);
+    document.getElementById('gh-msg').textContent = 'Configuration Saved!';
+    setTimeout(() => document.getElementById('gh-msg').textContent = '', 2000);
+}
+
+async function triggerWorkflow(workflowName, btnNode) {
+    const auth = getGhAuth();
+    if(!auth.u || !auth.t) {
+        alert("Please configure your GitHub Username and Personal Access Token in the settings (top right) first.");
+        return;
+    }
+    
+    btnNode.textContent = "FIRING...";
+    btnNode.disabled = true;
+
+    try {
+        const res = await fetch(`https://api.github.com/repos/${auth.u}/MapleDevs/actions/workflows/${workflowName}/dispatches`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${auth.t}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ref: 'main' })
+        });
+        
+        if (res.ok) {
+            btnNode.textContent = "DEPLOYED!";
+            btnNode.style.background = "var(--status-good)";
+        } else {
+            throw new Error(`API Error ${res.status}`);
+        }
+    } catch (e) {
+        btnNode.textContent = "ERROR";
+        btnNode.style.background = "var(--status-warn)";
+        console.error(e);
+    }
+    
+    setTimeout(() => {
+        btnNode.textContent = "ENGAGE";
+        btnNode.style.background = "var(--maple)";
+        btnNode.disabled = false;
+    }, 3000);
+}
+
+async function createGitHubIssue(requestText) {
+    const auth = getGhAuth();
+    if(!auth.u || !auth.t) {
+        pushMsg('ai', `I cannot automatically edit the website because there is no GitHub API Key connected. Please open the settings (⚙️) and enter your Personal Access Token, then ask me again.`);
+        return;
+    }
+
+    pushMsg('ai', `Connecting to Antigravity core... dispatching your code change request to the root repository.`);
+    
+    try {
+        const res = await fetch(`https://api.github.com/repos/${auth.u}/MapleDevs/issues`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${auth.t}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                title: `[Dashboard Command] Code Change Request`,
+                body: `The website administrator requested the following change from the Dashboard Command Center:\n\n> "${requestText}"\n\nAI Engineer, please review this request and implement the requested changes.`
+            })
+        });
+        
+        if (res.ok) {
+            const data = await res.json();
+            pushMsg('ai', `✅ Request successfully forwarded to the Engineering AI (Antigravity). An autonomous task ticket has been created: <a href="${data.html_url}" target="_blank" style="color:var(--status-good);">View Ticket #${data.number}</a>. Open your IDE so Antigravity can begin writing the code.`);
+        } else {
+            throw new Error(`API Error ${res.status}`);
+        }
+    } catch (e) {
+        pushMsg('ai', `❌ Ticket creation failed. Verify your GitHub Token has 'repo' access rights.`);
+        console.error(e);
+    }
 }
 
 load();
