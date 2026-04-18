@@ -28,7 +28,7 @@ jobs:
       - name: 📥 Install dependencies
         run: |
           cd scripts
-          npm install googleapis google-auth-library slugify
+          npm install googleapis google-auth-library slugify axios
 
       - name: 🔍 Scrape & Build & Index
         env:
@@ -36,6 +36,8 @@ jobs:
           GOOGLE_SERVICE_ACCOUNT_EMAIL: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_EMAIL }}
           GOOGLE_PRIVATE_KEY: ${{ secrets.GOOGLE_PRIVATE_KEY }}
           GOOGLE_INDEXING_KEY: ${{ secrets.GOOGLE_INDEXING_KEY }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
         run: |
           cd scripts
           echo "🚀 Step 1: Scraping Jobs..."
@@ -44,6 +46,9 @@ jobs:
           node build-seo.js
           echo "🔍 Step 3: Pinging Google Indexing API..."
           node google-index.js
+          echo "📣 Step 4: Announcing on LinkedIn..."
+          node post-linkedin.js
+
 
       - name: 🚀 Commit and Push changes
         run: |
