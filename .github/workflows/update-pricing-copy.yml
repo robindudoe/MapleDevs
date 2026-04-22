@@ -1,0 +1,79 @@
+name: Update pricing copy
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/update-pricing-copy.yml
+
+permissions:
+  contents: write
+
+jobs:
+  update-copy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - name: Patch pricing copy
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const path = 'index.html';
+          let s = fs.readFileSync(path, 'utf8');
+
+          function replaceExact(oldText, newText) {
+            if (s.includes(oldText)) s = s.replace(oldText, newText);
+          }
+
+          replaceExact(
+            'Featured jobs (<b>$29 CAD</b>) stay at the top and help fund this community.',
+            'Featured jobs (<b>$49 CAD</b>) stay at the top, get 5x more clicks, and help fund this community.'
+          );
+          replaceExact(
+            'Featured jobs (<b>$49 CAD</b>) stay at the top, get 5x more clicks, and help fund this community.\n      <button type="button" class="modal-x" onclick="closePostModal()" aria-label="Close">',
+            'Featured jobs (<b>$49 CAD</b>) stay at the top, get 5x more clicks, and help fund this community.\n      <p>Hiring Boost placements are <b>$149 CAD</b> and include homepage, newsletter, and community visibility.</p>\n      <button type="button" class="modal-x" onclick="closePostModal()" aria-label="Close">'
+          );
+          replaceExact(
+            'Featured jobs (<b>$49 CAD</b>) stay at the top, get 5x more clicks, and help fund this community.</p>\n      <button type="button" class="modal-x" onclick="closePostModal()" aria-label="Close">',
+            'Featured jobs (<b>$49 CAD</b>) stay at the top, get 5x more clicks, and help fund this community.</p>\n      <p>Hiring Boost placements are <b>$149 CAD</b> and include homepage, newsletter, and community visibility.</p>\n      <button type="button" class="modal-x" onclick="closePostModal()" aria-label="Close">'
+          );
+
+          s = s.replace(
+            /<h3>For studios<\/h3>\s*<p style="font-size:0\.9rem; margin-top:1rem; color:var\(--text-3\)">[\s\S]*?<\/p>/,
+            '<h3>For studios</h3>\n    <p style="font-size:0.9rem; margin-top:1rem; color:var(--text-3)">Standard listings are free. Featured listings are <b>$49 CAD</b>, and Hiring Boost placements are <b>$149 CAD</b>. Paid placements are handled by Interac e-Transfer to <b>wupeiheng11@gmail.com</b>.</p>'
+          );
+
+          s = s.replace(
+            /<h3>4\. For Employers & Payments<\/h3>\s*<p>[\s\S]*?<\/p>/,
+            '<h3>4. For Employers & Payments</h3>\n      <p>Standard listings are currently free. Featured Listings are available for <strong>$49 CAD</strong>, and Hiring Boost placements are available for <strong>$149 CAD</strong>. Featured roles stay at the top, get newsletter priority, and may be highlighted on social/community channels. Payments are made via Interac e-Transfer to <strong>wupeiheng11@gmail.com</strong>.</p>'
+          );
+
+          s = s.replace(/To feature this role \(\$29 CAD\)/g, 'To feature this role ($49 CAD)');
+          s = s.replace(/\$29 CAD/g, '$49 CAD');
+          s = s.replace(/29 CAD/g, '49 CAD');
+
+          if (!s.includes('Hiring Boost placements are <b>$149 CAD</b> and include homepage, newsletter, and community visibility.')) {
+            throw new Error('Modal Hiring Boost copy missing');
+          }
+          if (!s.includes('Standard listings are free. Featured listings are <b>$49 CAD</b>, and Hiring Boost placements are <b>$149 CAD</b>.')) {
+            throw new Error('About pricing copy missing');
+          }
+          if (!s.includes('Standard listings are currently free. Featured Listings are available for <strong>$49 CAD</strong>, and Hiring Boost placements are available for <strong>$149 CAD</strong>.')) {
+            throw new Error('Terms pricing copy missing');
+          }
+          if (/\$29|29 CAD/.test(s)) {
+            throw new Error('Old $29 pricing remains');
+          }
+
+          fs.writeFileSync(path, s, 'utf8');
+          NODE
+      - name: Commit update and remove workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          rm .github/workflows/update-pricing-copy.yml
+          git add index.html .github/workflows/update-pricing-copy.yml
+          git commit -m "Update MapleDevs pricing copy" || exit 0
+          git push
