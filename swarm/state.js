@@ -16,7 +16,7 @@ window.SWARM_STATE = {
       "status": "Idle",
       "last_action": "Error: MISSING_API_KEY: Please set GOOGLE_API_KEY or GEMINI_API_KEY in your .env file.",
       "project": "Gaming News & Jobs",
-      "last_run": "2026-07-05T19:15:11.236Z"
+      "last_run": "2026-07-06T21:42:27.380Z"
     },
     "reviewer": {
       "status": "Idle",
