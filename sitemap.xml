@@ -76,6 +76,7 @@
   <url><loc>https://mapledevs.ca/jobs/senior-tools-programmer-ui-and-ai-workflows-epic-games-montreal-quebec/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/senior-tools-programmer-ui-and-ai-workflows-epic-games-vancouverbritish-columbia/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/principal-data-engineer-digital-extremes-london-on/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/sr-technical-producer-digital-extremes-london-on/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/technical-animator-12-month-contract-blackbird-interactive-vancouver-bc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/jr-product-designer-web-digital-extremes-london-on/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/software-engineer-ii-web-digital-extremes-london-on/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -92,15 +93,9 @@
   <url><loc>https://mapledevs.ca/jobs/3d-character-artist-gameloft-remote/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/customer-care-agent-english-and-french-gameloft-remote/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/level-designer-4-month-contract-blackbird-interactive-vancouver-bc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/directeurrice-de-produit-connaissance-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/product-director-knowledge-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/marketability-director-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/positionnement-et-strategie-produit-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/creative-director-external-development-blackbird-interactive-vancouver-bc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/lead-software-engineer-original-game-unreal-engine-5-blackbird-interactive-vancouver-bc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/senior-software-engineer-original-game-unreal-engine-5-blackbird-interactive-vancouver-bc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/software-engineer-mlops-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/developpeureuse-logiciel-en-exploitation-de-modeles-dapprentissage-automatique-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/technical-art-director-unreal-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/directeurtrice-technique-graphique-unreal-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/site-reliability-specialist-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -110,11 +105,8 @@
   <url><loc>https://mapledevs.ca/jobs/lead-2d-artist-gameloft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/expert-animation-programmer-randd-cd-projekt-red-remote/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/vfx-artist-unreal-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/artiste-deffets-speciaux-unreal-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/principal-technical-artist-unreal-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/artiste-technique-principale-unreal-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/3d-character-modeler-march-of-giants-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/modeleureuse-de-personnages-3d-march-of-giants-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/character-artist-modeling-and-texturing-ubisoft-toronto-on/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/user-interface-artist-rainbow-six-siege-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/rainbow-six-siege-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -136,18 +128,12 @@
   <url><loc>https://mapledevs.ca/jobs/senior-3d-programmer-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/programmeureuse-3d-senior-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/technical-lead-data-tgqf-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/lead-technique-donnees-tgqf-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/it-developer-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/developpeureuse-ti-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/senior-gameplay-programmer-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/product-manager-compass-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/gestionnaire-de-produit-compass-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/junior-character-artist-splinter-cell-ubisoft-toronto-on/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/senior-data-scientist-epic-games-montreal-quebec/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/technical-artist-5-month-contract-blackbird-interactive-vancouver-bc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/hybride-vfx-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/team-lead-level-designer-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/cheffe-dequipe-concepteurtrice-de-niveaux-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/player-identity-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/developpeureuse-logiciel-senior-online-services-hosting-platforms-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/developpeureuse-logiciel-senior-online-services-crossroads-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -165,13 +151,32 @@
   <url><loc>https://mapledevs.ca/jobs/it-technician-cd-projekt-red-vancouver-bc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/director-product-management-social-and-player-identity-platform-epic-games-montreal-quebec/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/engine-programmer-epic-games-montreal-quebec/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/senior-ai-data-developer-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/content-creators-manager-ubisoft-remote/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mapledevs.ca/jobs/developpeureuse-de-donnees-ia-senior-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/senior-character-rigger-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/createurrice-de-systemes-animables-rigger-senior-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/analyste-planification-financiere-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/marketing-product-manager-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/cheffe-de-produit-marketing-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/engine-programmer-epic-games-vancouverbritish-columbia/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/design-director-blackbird-interactive-vancouver-bc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/technical-designer-blackbird-interactive-vancouver-bc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/senior-ai-data-developer-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/developpeureuse-de-donnees-ia-senior-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/product-manager-compass-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/cheffe-dequipe-informatique-online-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/gestionnaire-de-produit-compass-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/team-lead-level-designer-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/cheffe-dequipe-concepteurtrice-de-niveaux-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/artiste-technique-principale-unreal-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/artiste-deffets-speciaux-unreal-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/modeleureuse-de-personnages-3d-march-of-giants-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/acheteureuse-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/network-programmer-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/programmeurse-reseau-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/technical-animation-director-unannounced-project-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/directeurrice-technique-animation-projet-non-annonce-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/cheffe-technique-donnees-tgqf-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/apprentissage-automatique-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/special-effects-artist-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/jobs/artiste-effets-speciaux-ubisoft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
